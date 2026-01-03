@@ -1,0 +1,799 @@
+/* style.css - โค้ด CSS พื้นฐานสำหรับ POS */
+
+:root {
+    --primary-color: #007bff;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --background-color: #f8f9fa;
+    --sidebar-color: #343a40;
+    --text-color: #333;
+    --text-color-light: #aaa;
+    --border-color: #dee2e6;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+.pos-container {
+    display: flex;
+    width: 100%;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-color);
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--box-shadow);
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #495057;
+}
+
+.main-nav {
+    flex-grow: 1;
+    padding: 20px 0;
+}
+
+.nav-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: #495057;
+}
+
+.nav-btn.active {
+    background-color: var(--primary-color);
+    font-weight: bold;
+}
+
+.nav-btn i {
+    margin-right: 10px;
+}
+
+.user-info {
+    padding: 20px;
+    font-size: 0.9em;
+    border-top: 1px solid #495057;
+}
+
+/* --- Main Content (POS) --- */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.menu-area {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+}
+
+.cart-area {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+}
+
+/* --- Menu Controls --- */
+.header-controls {
+    margin-bottom: 15px;
+}
+
+.menu-categories {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.category-btn {
+    padding: 8px 15px;
+    border: 1px solid var(--primary-color);
+    background-color: white;
+    color: var(--primary-color);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.category-btn.active, .category-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#menu-search {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.menu-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative; /* สำหรับสถานะสินค้าหมด */
+}
+
+.menu-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.menu-item img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.item-name {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 5px 0 2px;
+}
+
+.item-price {
+    font-size: 0.8em;
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+/* --- Cart Area --- */
+.cart-header {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cart-header h2 {
+    margin: 0 0 5px;
+    font-size: 1.2em;
+}
+
+.member-status-text {
+    font-size: 0.9em;
+    color: var(--text-color-light);
+}
+
+.cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cart-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-name-cart {
+    flex: 2;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.quantity-control {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 90px;
+}
+
+.qty-btn {
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 2px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.item-qty {
+    font-weight: bold;
+}
+
+.item-price-cart {
+    flex: 1;
+    text-align: right;
+    font-weight: bold;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.item-note {
+    width: 100%;
+    font-size: 0.8em;
+    color: #888;
+    margin: 5px 0 0 0;
+    padding-left: 5px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.item-note.add-note-btn {
+    color: var(--primary-color);
+    font-style: normal;
+    text-decoration: underline;
+}
+
+.cart-footer {
+    padding: 15px;
+}
+
+.member-status {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.member-info-detail {
+    margin-bottom: 10px;
+}
+
+.member-status-line {
+    margin: 3px 0;
+    font-size: 0.9em;
+}
+
+.member-action {
+    display: flex;
+    gap: 10px;
+}
+
+#member-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.bill-summary {
+    margin-bottom: 15px;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 0.95em;
+}
+
+.summary-line.total-line {
+    font-size: 1.2em;
+    font-weight: bold;
+    border-top: 2px solid var(--text-color);
+    padding-top: 10px;
+    margin-top: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s;
+    font-size: 1em;
+}
+
+.btn-sm {
+    padding: 5px 10px !important;
+    font-size: 0.85em !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+    flex: 2;
+    font-size: 1.1em;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    color: var(--text-color);
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- Modals (General) --- */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    position: relative;
+}
+
+.close-btn, .modifier-close-btn, .menu-editor-close-btn, .stock-close-btn, .report-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover, .close-btn:focus,
+.modifier-close-btn:hover, .modifier-close-btn:focus,
+.menu-editor-close-btn:hover, .menu-editor-close-btn:focus,
+.stock-close-btn:hover, .stock-close-btn:focus,
+.report-close-btn:hover, .report-close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --- Payment Modal Specifics --- */
+.payment-modal-content {
+    max-width: 450px;
+}
+
+.payment-total {
+    text-align: center;
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.payment-total strong {
+    font-size: 2em;
+    color: var(--danger-color);
+    display: block;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.payment-method-btn {
+    flex-grow: 1;
+    padding: 15px;
+    background: #eee;
+    color: var(--text-color);
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.payment-method-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+#cash-section, #promptpay-section {
+    padding: 15px 0;
+}
+
+.cash-input-group {
+    margin-bottom: 10px;
+}
+
+#cash-received {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: right;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.quick-cash-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.quick-cash-btn {
+    flex-grow: 1;
+    padding: 10px;
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.qr-code-placeholder {
+    height: 150px;
+    background: #f0f0f0;
+    border: 1px dashed #ccc;
+    text-align: center;
+    line-height: 150px;
+    margin: 10px 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Modifier Modal Specifics --- */
+.modifier-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+}
+
+.modifier-option-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9em;
+}
+
+.modifier-option-btn.selected, .modifier-option-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Menu Editor Modal Specifics --- */
+.menu-editor-modal-content {
+    max-width: 900px;
+}
+
+.editor-container {
+    display: flex;
+    gap: 20px;
+}
+
+.editor-form-section {
+    flex: 1;
+    padding-right: 20px;
+    border-right: 1px solid #eee;
+}
+
+.editor-list-section {
+    flex: 2;
+}
+
+#menu-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+#menu-form input[type="text"],
+#menu-form input[type="number"],
+#menu-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#menu-form button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.editor-list-display {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.editor-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.editor-item-actions button {
+    margin-left: 5px;
+    padding: 5px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.editor-item-actions .edit-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.editor-item-actions .delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* --- Stock Modal Specifics --- */
+.stock-modal-content {
+    max-width: 500px;
+}
+
+.stock-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.stock-item-name {
+    font-weight: bold;
+}
+
+.stock-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stock-input-group input {
+    width: 80px;
+    padding: 5px;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.stock-modal-content button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.warning-text {
+    color: var(--danger-color);
+    font-size: 0.9em;
+    padding: 10px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+}
+
+
+/* --- Report Modal Specifics --- */
+.report-modal-content {
+    max-width: 900px;
+}
+
+.report-summary {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    flex: 1;
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.summary-card h4 {
+    margin: 0 0 5px;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.summary-card p {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.transaction-list-display {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* --- NEW CSS FOR POINTS/RE-ORDER/OUT-OF-STOCK --- */
+
+/* Out-of-Stock Status */
+.menu-item.out-of-stock {
+    opacity: 0.5; 
+    cursor: not-allowed; 
+    pointer-events: none; 
+    position: relative; 
+    border: 2px solid #FFC107; 
+}
+
+.menu-item.out-of-stock img {
+    filter: grayscale(100%); 
+}
+
+.out-of-stock-label {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #FF5722; 
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 10;
+}
+
+/* Points System (Member Status) */
+.use-points-control {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-top: 1px dashed #DDD;
+}
+
+#points-use-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: right;
+    width: 60%;
+}
+
+#apply-points-btn {
+    padding: 8px 10px;
+    font-size: 0.85em;
+    width: 40%;
+}
+
+/* Re-Order Button in Report Modal */
+.reorder-btn {
+    padding: 5px 8px;
+    font-size: 0.75em;
+    background-color: #6200EE; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reorder-btn:hover {
+    background-color: #3700B3;
+}
+
+/* ปรับ layout ของตารางรายงานให้มีคอลัมน์ Action */
+.transaction-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1.2fr; /* เพิ่มคอลัมน์ Action */
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}

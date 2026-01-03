@@ -1,0 +1,12 @@
+{
+  "name": "restaurant-pos",
+  "version": "1.0.0",
+  "description": "OrderFlow Pro POS Terminal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

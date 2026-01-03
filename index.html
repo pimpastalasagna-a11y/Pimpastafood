@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderFlow POS System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="pos-container">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-mug-hot"></i> OrderFlow POS
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-panel="pos">
+                    <i class="fas fa-cash-register"></i> จุดขาย (POS)
+                </button>
+                <button class="nav-btn" data-panel="stock">
+                    <i class="fas fa-warehouse"></i> จัดการสต็อก
+                </button>
+                <button class="nav-btn" data-panel="report">
+                    <i class="fas fa-chart-line"></i> รายงานการขาย
+                </button>
+                <button class="nav-btn" data-panel="settings">
+                    <i class="fas fa-cog"></i> จัดการเมนู
+                </button>
+            </nav>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i> พนักงาน: A001
+            </div>
+        </div>
+
+        <div class="main-content" id="pos-panel">
+            
+            <div class="menu-area">
+                <div class="header-controls">
+                    <div id="menu-categories" class="menu-categories">
+                        </div>
+                    <input type="text" id="menu-search" placeholder="ค้นหาเมนู...">
+                </div>
+                <div id="menu-grid" class="menu-grid">
+                    </div>
+            </div>
+
+            <div class="cart-area">
+                <div class="cart-header">
+                    <h2><i class="fas fa-receipt"></i> ออเดอร์ #<span id="order-sequence">1</span></h2>
+                    <p id="member-discount-display" class="member-status-text">0% (ไม่มีสมาชิก)</p>
+                </div>
+                
+                <div id="cart-items" class="cart-items">
+                    </div>
+
+                <div class="cart-footer">
+                    
+                    <div class="member-status">
+                        <div class="member-info-detail">
+                            <p class="member-status-line">
+                                <i class="fas fa-tag"></i> 
+                                ส่วนลดสมาชิก: <strong id="member-discount-rate-display">0</strong>%
+                            </p>
+                            <p class="member-status-line">
+                                <i class="fas fa-coins"></i> 
+                                แต้มสะสมปัจจุบัน: <strong id="member-points-display">0 แต้ม</strong>
+                            </p>
+                            <p class="member-status-line">
+                                <i class="fas fa-plus"></i> 
+                                แต้มที่จะได้รับ: <strong id="new-points-earned">0 แต้ม</strong>
+                            </p>
+                        </div>
+
+                        <div class="use-points-control">
+                            <input type="number" id="points-use-input" placeholder="จำนวนแต้มที่ใช้" min="0" disabled>
+                            <button id="apply-points-btn" class="btn btn-warning">ใช้แต้ม</button>
+                        </div>
+
+                        <div class="member-action">
+                            <input type="text" id="member-input" placeholder="เบอร์โทร/ชื่อสมาชิก">
+                            <button id="apply-member-btn" class="btn btn-primary"><i class="fas fa-user-plus"></i> เพิ่มสมาชิก</button>
+                        </div>
+                    </div>
+
+                    <div class="bill-summary">
+                        <div class="summary-line">
+                            <span>รวม (Subtotal)</span>
+                            <span id="subtotal">฿0.00</span>
+                        </div>
+                        <div class="summary-line member-discount-line" style="display: none;">
+                            <span>ส่วนลดสมาชิก</span>
+                            <span id="member-discount">-฿0.00</span>
+                        </div>
+                        
+                        <div class="summary-line" id="points-discount-line" style="display: none;">
+                            <span>ส่วนลดจากแต้ม (<span id="points-to-use-display">0</span> แต้ม)</span>
+                            <span id="points-discount">-฿0.00</span>
+                        </div>
+                        
+                        <div class="summary-line">
+                            <span>ส่วนลดโปรโมชั่น (10%)</span>
+                            <span id="promo-discount">-฿0.00</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>VAT (7%)</span>
+                            <span id="vat">฿0.00</span>
+                        </div>
+                        <div class="summary-line total-line">
+                            <strong>รวมสุทธิ (Total)</strong>
+                            <strong id="total-amount">฿0.00</strong>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="print-kot-btn" class="btn btn-secondary">พิมพ์ใบสั่ง (KOT)</button>
+                        <button id="clear-cart-btn" class="btn btn-danger"><i class="fas fa-trash"></i> เคลียร์ออเดอร์</button>
+                        <button class="pay-btn btn-success"><i class="fas fa-credit-card"></i> ชำระเงิน <span id="pay-amount">฿0.00</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-placeholder" id="stock-panel" style="display: none;"></div>
+        <div class="panel-placeholder" id="report-panel" style="display: none;"></div>
+        <div class="panel-placeholder" id="settings-panel" style="display: none;"></div>
+
+    </div>
+
+    <div id="modifier-modal" class="modal">
+        <div class="modal-content">
+            <span class="modifier-close-btn">&times;</span>
+            <h3>ปรับแต่งเมนู: <span id="modifier-item-name"></span></h3>
+            
+            <h4>ระดับความหวาน:</h4>
+            <div id="sugar-options" class="modifier-options">
+                </div>
+
+            <h4>อุณหภูมิ:</h4>
+            <div id="temp-options" class="modifier-options">
+                </div>
+            
+            <button id="confirm-modifiers-btn" class="btn btn-success">ยืนยัน</button>
+        </div>
+    </div>
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content payment-modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>ชำระเงิน</h3>
+            <div class="payment-total">
+                <p>ยอดรวมที่ต้องชำระ</p>
+                <strong id="modal-total">฿0.00</strong>
+            </div>
+
+            <div class="payment-methods">
+                <button class="payment-method-btn active" data-method="cash">
+                    <i class="fas fa-money-bill-wave"></i> เงินสด
+                </button>
+                <button class="payment-method-btn" data-method="promptpay">
+                    <i class="fas fa-qrcode"></i> PromptPay / โอน
+                </button>
+            </div>
+
+            <div id="cash-section">
+                <h4>เงินสดที่ได้รับ</h4>
+                <div class="cash-input-group">
+                    <input type="number" id="cash-received" placeholder="กรอกจำนวนเงิน">
+                </div>
+                <div class="quick-cash-buttons">
+                    <button class="quick-cash-btn" data-amount="100">฿100</button>
+                    <button class="quick-cash-btn" data-amount="500">฿500</button>
+                    <button class="quick-cash-btn" data-amount="1000">฿1000</button>
+                </div>
+                <div class="summary-line total-line">
+                    <strong>เงินทอน</strong>
+                    <strong id="cash-change" style="color: var(--success-color);">฿0.00</strong>
+                </div>
+            </div>
+
+            <div id="promptpay-section" class="hidden">
+                <h4>สแกนเพื่อชำระเงิน</h4>
+                <p>กรุณาให้ลูกค้าสแกน QR Code</p>
+                <div class="qr-code-placeholder"></div>
+                <button id="confirm-transfer-btn" class="btn btn-primary">ยืนยันการโอนเงิน</button>
+            </div>
+
+            <button id="final-checkout-btn" class="btn btn-success btn-lg" disabled>
+                ยืนยันการปิดบิล
+            </button>
+        </div>
+    </div>
+    
+    <div id="menu-editor-modal" class="modal">
+        <div class="modal-content menu-editor-modal-content">
+            <span class="menu-editor-close-btn">&times;</span>
+            <h3>จัดการเมนู (Menu Editor)</h3>
+            
+            <div class="editor-container">
+                <div class="editor-form-section">
+                    <h4>เพิ่ม/แก้ไขเมนู</h4>
+                    <form id="menu-form">
+                        <input type="hidden" id="item-id-edit">
+                        <label for="item-name">ชื่อเมนู:</label>
+                        <input type="text" id="item-name" required>
+                        
+                        <label for="item-price">ราคา:</label>
+                        <input type="number" id="item-price" step="0.01" min="0" required>
+                        
+                        <label for="item-category">หมวดหมู่:</label>
+                        <input type="text" id="item-category" required>
+                        
+                        <label for="item-isdrink">ประเภท:</label>
+                        <select id="item-isdrink">
+                            <option value="false">อาหาร/ของหวาน</option>
+                            <option value="true">เครื่องดื่ม</option>
+                        </select>
+                        
+                        <label for="item-image-url">URL รูปภาพ (Placeholder):</label>
+                        <input type="text" id="item-image-url" value="https://via.placeholder.com/150">
+                        
+                        <button type="submit" class="btn btn-primary">บันทึกเมนู</button>
+                    </form>
+                </div>
+
+                <div class="editor-list-section">
+                    <h4>รายการเมนูปัจจุบัน</h4>
+                    <div id="menu-list-display" class="editor-list-display">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stock-modal" class="modal">
+        <div class="modal-content stock-modal-content">
+            <span class="stock-close-btn">&times;</span>
+            <h3>จัดการระดับสต็อก (Stock Levels)</h3>
+            
+            <p class="warning-text"><i class="fas fa-exclamation-triangle"></i> สินค้าที่สต็อกเป็น 0 จะขึ้นว่า "สินค้าหมด" ในหน้า POS</p>
+
+            <div id="stock-list-display" class="editor-list-display">
+                </div>
+            
+            <button id="save-stock-btn" class="btn btn-success">บันทึกสต็อก</button>
+        </div>
+    </div>
+
+    <div id="report-modal" class="modal">
+        <div class="modal-content report-modal-content">
+            <span class="report-close-btn">&times;</span>
+            <h3>รายงานการขาย (Sales Report)</h3>
+            
+            <div id="report-summary" class="report-summary">
+                </div>
+
+            <h3>รายการบิลที่ปิดแล้ว (Transactions)</h3>
+            <div id="transaction-list-display" class="transaction-list-display">
+                <div class="transaction-row" style="font-weight: bold; background: #EEE; padding: 10px;">
+                    <span>บิลที่</span>
+                    <span>รวม (฿)</span>
+                    <span>ส่วนลด (฿)</span>
+                    <span>ช่องทางชำระ</span>
+                    <span>Action</span>
+                </div>
+                </div>
+            
+            <button id="export-report-btn" class="btn btn-secondary">ส่งออกเป็น CSV</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
